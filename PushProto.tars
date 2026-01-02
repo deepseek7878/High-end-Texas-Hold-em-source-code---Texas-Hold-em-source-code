@@ -1,0 +1,280 @@
+
+/**
+**推送系统协议
+* 
+**/
+module push
+{
+    //推送消息类型
+	enum E_Push_Msg_Type
+	{
+		E_PUSH_MSG_TYPE_MATCH_BEGIN      = 0,  //比赛开始消息
+		E_PUSH_MSG_TYPE_MULTIPLE_LOGIN   = 1,  //重复登录消息
+		E_PUSH_MSG_TYPE_COIN_CHANGE      = 2,  //货币变更
+		E_PUSH_MSG_TYPE_CHAT_UPDATE      = 3,  //聊天消息变更推送
+		E_PUSH_MSG_TYPE_TICKET_STATUS    = 4,  //资格卡核销通知
+		E_PUSH_MSG_TYPE_INVITE_PLAYER    = 5,  //邀请玩家
+		E_PUSH_MSG_TYPE_ADD_FRIEND       = 6,  //添加好友
+		E_PUSH_MSG_TYPE_TASK_FINISH      = 7,  //任务完成
+		E_PUSH_MSG_TYPE_GIVE_PROPS       = 8,  //赠送道具
+		E_PUSH_MSG_TYPE_RECHARGE_REWARDS = 9,  //充值奖励
+		E_PUSH_MSG_TYPE_NEW_MAIL_NOTIFY  = 10, //新邮件通知
+		E_PUSH_MSG_TYPE_SERVER_UPDATE    = 11, //服务器维护
+		E_PUSH_MSG_TYPE_AI_INFO          = 12, //AI数据
+		E_PUSH_MSG_TYPE_PROPS_CHANGE     = 13,  //道具变更
+		E_PUSH_MSG_TYPE_REWARD_NOTIFY	 = 14, //奖励公告
+		E_PUSH_MSG_TYPE_GET_BOX_NOTIFY	 = 15, //获得宝箱
+	};
+
+	//推送消息
+	struct PushMsg
+	{
+		0 optional long uid;
+		1 optional E_Push_Msg_Type msgType;
+		2 optional vector<byte> vecData;
+		3 optional string accessAddr;      //接入服务器地址
+		4 optional int changeType;
+	};
+
+	//推送消息请求
+	struct PushMsgReq
+	{
+		0 optional vector<PushMsg> msg;
+	};
+
+	//比赛开始通知
+	struct MatchBeginNotify
+	{
+		0 optional int matchID;         //比赛ID
+		1 optional string sRoomID;	    //RoomID
+	};
+
+	// 重复登录通知
+	// struct MultipleLoginNotify
+	// {
+	// 	0 optional string accessAddr;      //接入服务器地址
+	// };
+
+	//货币推送消息
+	struct CoinNotify
+	{
+		0 optional int changeType;   //类型
+		1 optional long gold;        //筹码
+		2 optional long diamond;     //钻石
+		3 optional long point;       //积分
+		4 optional long tickets;     //奖券
+		5 optional int level;        //用户等级
+		6 optional int experience;   //当前经验
+		7 optional int vipLevel;     //VIP等级
+		8 optional int vipExperience;//VIP当前经验
+	};
+
+	//邀请玩家
+	struct InvitedPlayerNotify
+	{
+		0 optional string sRoomID;    //房间ID
+		1 optional string sRoomName;  //房间名称
+		2 optional string sNickName;  //邀请玩家昵称
+		3 optional long lPlayerID;    //邀请玩家ID
+		4 optional long lBigBlind;    //大盲注
+		5 optional long lSmallBlind;  //小盲注
+		6 optional int matchID;       //比赛ID
+		7 optional int tableID;       //桌子ID
+		8 optional string sRoomKey;
+	};
+
+	//添加好友
+	struct AddFriendNotify
+	{
+	    0 optional long lPlayerID;    //添加好友的玩家ID
+		1 optional string sNickName;  //添加好友的玩家昵称
+	};
+
+    struct TableInfo
+    {
+        0 require int level;
+        1 require long smallBlind;
+        2 require long bigBlind;
+        3 require long minGold;
+        4 require long maxGold;
+        5 require long fastGold;
+        6 require long maxSeat;
+    };
+    struct RoomTableInfo
+    {
+        0 optional string roomid;
+        1 optional map<int, TableInfo> tableInfo; //key: iTableID
+    };
+
+    //任务完成
+    struct TaskFinishNotify
+    {
+        0 optional vector<int> vecTaskId;//任务ID列表
+    };
+
+    //充值奖励
+    struct RechargeRewardsNotify
+    {
+        0 optional int isLimitedTime;//是否限时充值奖励:1-是,0-否
+        1 optional int isFirstTime;  //是否首次充值奖励:1-是,0-否
+        2 optional int isDailyTime;  //是否每日充值奖励:1-是,0-否
+    };
+
+    //服务器维护
+    struct ServerUpdateNotify
+    {
+        0 optional int iMinutes;//分钟数
+    };
+
+    //网关在线用户上报
+    struct OnlineUserReportReq
+    {
+        0 require map<long, long> users;
+        1 require string sRouterAddr;
+    };
+
+    //网关在线用户上报
+    struct OnlineUserReportResp
+    {
+        1 require int iResultCode;
+    };
+
+    struct PropsChangeNotify
+    {
+    	1 require int iPropsID;
+    	2 require long lCurrCount;
+    };
+
+	//// 奖励公告
+	enum E_Reward_Mold_ID
+	{
+		E_REWARD_MOLD_BLIND_NOTE = 1,		//恭喜%s玩家在经典场%s中获得%s筹码
+		E_REWARD_MOLD_AOF_CONTEST = 2,		//恭喜%s玩家在AOF场%s中获得%s奖励
+		E_REWARD_MOLD_DUAN_PAI = 3,			//恭喜%s玩家在短牌场%s中获得%s奖励
+		E_REWARD_MOLD_SNG_CONTEST = 4,		//恭喜%s玩家在SNG比赛中获得第%s名,获得%s奖励
+		E_REWARD_MOLD_MTT_CONTEST = 5, 		//恭喜%s玩家在MTT比赛中获得第%s名,获得%s奖励
+		E_REWARD_MOLD_TOKEN_LOTTERY = 6,	//恭喜%s在代币抽奖获得%s奖品
+	};
+
+	// 奖励参数
+	struct RewardParam
+	{
+		0 require string sNickName;//昵称
+		1 require string sPlace;//场次
+		2 require int ranking;//比赛名次
+		3 require vector<PropsChangeNotify> sPrize;//奖励
+		4 require long intervalTime;//间隔时间
+		5 require long views;//播放次数
+	};
+	
+	struct RewardNotify
+	{
+		0 require int id; //广播id（每个id对应具体的模板）
+		1 require int type;//广播类型 1系统广播，2客服广播
+		2 require string data; //广播数据
+		3 require RewardParam param; //广播填充参数
+	};
+
+	//获得宝箱通知
+	struct PreciousBoxNotify
+	{
+    	0 require int iBetId;//场次id（盲注等级）
+    	1 require int number;//宝箱数量
+	};
+
+    //AI数据
+    struct AiDataReport
+    {
+	    0 optional long uid;
+	    1 optional unsigned int vpip;//主动入池率
+	    2 optional unsigned int pfr;//加注入池率
+	    3 optional unsigned int showdown;//摊牌率
+	    4 optional unsigned int cbet;//持续下注
+	    5 optional unsigned int win_showdown;//摊牌胜率
+	    6 optional unsigned int three_bet;//3bet
+
+	    7 optional unsigned int vpip_bb;//
+	    8 optional unsigned int vpip_btn;
+	    9 optional unsigned int fold_to_three_bet;
+	    10 optional unsigned int fold_to_four_bet;
+	    11 optional unsigned int four_bet;
+	    12 optional unsigned int call_five_bet;
+	    13 optional unsigned int fold_to_five_bet;
+	    14 optional unsigned int limp;
+	    15 optional unsigned int limp_raise;
+
+	    16 optional unsigned int single_cbet;
+	    17 optional unsigned int single_cbet_ip;
+	    18 optional unsigned int single_cbet_oop;
+	    19 optional unsigned int single_cbet_check_raise;
+	    20 optional unsigned int single_cbet_fold_to_raise;
+	    21 optional unsigned int single_cbet_call_raise;
+	    22 optional unsigned int single_cbet_reraise;
+
+	    23 optional unsigned int single_barreling;
+	    24 optional unsigned int single_double_barreling;
+	    25 optional unsigned int single_tripple_barreling;
+
+	    26 optional unsigned int single_fold_to_cbet;
+	    27 optional unsigned int single_fold_to_cbet_ip;
+	    28 optional unsigned int single_fold_to_cbet_oop;
+	    29 optional unsigned int single_call_cbet;
+	    30 optional unsigned int single_call_cbet_ip;
+	    31 optional unsigned int single_check_call_cbet_oop;
+	    32 optional unsigned int single_raise_cbet;
+	    33 optional unsigned int single_check_raise_cbet;
+	    34 optional unsigned int single_miss_cbet_bet_ip;
+	    35 optional unsigned int single_miss_cbet_bet_oop;
+	    36 optional unsigned int single_donk;
+	    37 optional unsigned int single_call_fold_to_double_barrel;
+	    38 optional unsigned int single_call_call_fold_to_tripple_barrel;
+
+	    39 optional unsigned int tbet_cbet;
+	    40 optional unsigned int tbet_cbet_ip;
+	    41 optional unsigned int tbet_cbet_oop;
+	    42 optional unsigned int tbet_cbet_check_raise;
+	    43 optional unsigned int tbet_cbet_fold_to_raise;
+	    44 optional unsigned int tbet_cbet_call_raise;
+	    45 optional unsigned int tbet_cbet_reraise;
+
+	    46 optional unsigned int tbet_barreling;
+	    47 optional unsigned int tbet_double_barreling;
+	    48 optional unsigned int tbet_tripple_barreling;
+
+	    49 optional unsigned int tbet_fold_to_cbet;
+	    50 optional unsigned int tbet_fold_to_cbet_ip;
+	    51 optional unsigned int tbet_fold_to_cbet_oop;
+	    52 optional unsigned int tbet_call_cbet;
+	    53 optional unsigned int tbet_call_cbet_ip;
+	    54 optional unsigned int tbet_check_call_cbet_oop;
+	    55 optional unsigned int tbet_raise_cbet;
+	    56 optional unsigned int tbet_check_raise_cbet;
+	    57 optional unsigned int tbet_miss_cbet_bet_ip;
+	    58 optional unsigned int tbet_miss_cbet_bet_oop;
+	    59 optional unsigned int tbet_donk;
+	    60 optional unsigned int tbet_call_fold_to_double_barrel;
+	    61 optional unsigned int tbet_call_call_fold_to_tripple_barrel;
+
+
+	    62 optional unsigned int bet_turn;
+	    63 optional unsigned int bet_turn_over_bet;
+	    64 optional unsigned int bet_turn_standard_bet;
+	    65 optional unsigned int bet_turn_half_pot;
+	    66 optional unsigned int bet_turn_small_pot;
+	    67 optional unsigned int raise_turn;
+	    68 optional unsigned int raise_turn_bluff;
+	    69 optional unsigned int raise_turn_bluff_toppair;
+	    70 optional unsigned int bet_river;
+	    71 optional unsigned int bet_river_over_bet;
+	    72 optional unsigned int bet_river_standard_bet;
+	    73 optional unsigned int bet_river_half_pot;
+	    74 optional unsigned int bet_river_small_pot;
+	    75 optional unsigned int bet_river_value;
+	    76 optional unsigned int bet_river_bluff;
+	    77 optional unsigned int bet_river_bluff_toppair;
+	    78 optional unsigned int raise_river;
+	    79 optional unsigned int raise_river_bluff;
+	    80 optional unsigned int raise_river_bluff_toppair;
+	    81 optional unsigned int call_down_river;
+    };
+};

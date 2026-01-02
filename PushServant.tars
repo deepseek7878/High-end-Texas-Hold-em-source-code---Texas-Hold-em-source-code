@@ -1,0 +1,67 @@
+#include "PushProto.tars"
+#include "UserStateProto.tars"
+#include "/home/tarsproto/XGame/Comm/JFGame.tars"
+
+/***
+* 推送系统接口
+*/
+module push
+{
+    interface PushServant
+    {
+		//http请求处理接口
+		int doRequest(vector<byte> reqBuf, map<string, string> extraInfo, out vector<byte> rspBuf);
+
+		//tcp请求处理接口
+		int onRequest(long lUin, string sMsgPack, string sCurServrantAddr, JFGame::TClientParam stClientParam, JFGame::UserBaseInfoExt stUserBaseInfo);
+
+		//推送消息
+		int pushMsg(PushMsgReq req);
+
+		//广播推送
+		int pushBroadcast(RewardNotify notify);
+		////////////////////////////////////////////////////////////////////////////////////////////////
+
+		//报告在线状态
+		int reportOnlineState(userstate::ReportOnlineStateReq req, out userstate::ReportOnlineStateResp resp);
+
+		//报告游戏状态
+		int reportGameState(userstate::ReportGameStateReq req, out userstate::ReportGameStateResp resp);
+
+		//在线状态
+		int onlineState(userstate::OnlineStateReq req, out userstate::OnlineStateResp resp);
+
+		//批量取在线状态
+		int batchOnlineState(userstate::BatchOnlineStateReq req, out userstate::BatchOnlineStateResp resp);
+
+		//取游戏状态
+		int gameState(userstate::GameStateReq req, out userstate::GameStateResp resp);
+
+		//批量取游戏状态
+		int batchGameState(userstate::BatchGameStateReq req, out userstate::BatchGameStateResp resp);
+
+		//房间对应玩家集合
+		int reportRoomUsers(string roomId, string uids, string blindUids_5, string blindUids_9, string robotWin_5, string robotWin_9);
+
+		//补偿玩家金币
+		int returnCompensateGold(string roomId);
+
+		//在线玩家列表
+		int onlinePlayerList(out userstate::OnlinePlayerListResp resp);
+
+		//在线玩家列表
+		int getlinePlayerList(int limit, out userstate::OnlinePlayerListResp resp);
+		
+		//上报房间桌子信息
+		int reportRoomTableInfo(push::RoomTableInfo data);
+
+		//服务器维护通知
+		int serverUpdateNotifyAll(int time);
+
+		//在线信息获取
+		int onlineInfoUserList(int type, out int userCount);
+
+		//在线用户上报
+		int onlineUserReport(OnlineUserReportReq req, out OnlineUserReportResp resp);
+	};
+};

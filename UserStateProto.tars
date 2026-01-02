@@ -1,0 +1,134 @@
+
+/**
+**用户状态系统协议
+* 
+**/
+module userstate
+{
+    //在线状态
+    enum E_Online_State
+    {
+        E_ONLINE_STATE_OFFLINE = 0, //离线
+        E_ONLINE_STATE_ONLINE  = 1, //在线
+    };
+
+    //报告在线状态请求
+    struct ReportOnlineStateReq
+    {
+        0 require  long           uid;    //用户标识
+        1 optional E_Online_State state;  //在线/离线
+        2 optional string         gwAddr; //网关地址
+        3 optional long           gwCid;  //连接标识
+    };
+
+    //报告在线状态应答
+    struct ReportOnlineStateResp
+    {
+        0 optional int resultCode;  //结果码
+    };
+
+    //在线状态请求
+    struct OnlineStateReq
+    {
+        0 optional long uid;
+    };
+
+    //用户在线状态
+    struct UserOnlineState
+    {
+        0 optional E_Online_State state;   //在线/离线
+        1 optional string         gwAddr;  //所在网关地址
+        2 optional long           gwCid;   //连接标识
+    };
+
+    //在线状态应答
+    struct OnlineStateResp
+    {
+        0 optional int             resultCode; //结果码
+        1 optional UserOnlineState data;       //在线状态
+    };
+
+    //批量取在线状态请求
+    struct BatchOnlineStateReq
+    {
+        0 optional vector<long> uidList;  //用户ID列表
+    };
+
+    //批量取在线状态应答
+    struct BatchOnlineStateResp
+    {
+        0 optional int resultCode;  //结果码
+        1 optional map<long, UserOnlineState> data;  //用户在线状态数据
+    };
+
+    //游戏状态
+    enum E_Game_State
+    {
+        E_GAME_STATE_OFF = 0, //不在游戏
+        E_GAME_STATE_ON  = 1, //正在游戏
+    };
+
+    //报告游戏状态请求
+    struct ReportGameStateReq
+    {
+        0 require long uid;
+        1 optional E_Game_State state;  //游戏状态
+        2 optional string gameAddr;     //广场地址
+        3 optional string sRoomID;      //RoomID
+        4 optional int    tableID;      //桌子ID
+        5 optional long   gold;         //小局开局金币
+        6 optional int    matchID;      //赛事ID
+    };
+
+    //报告游戏状态应答
+    struct ReportGameStateResp
+    {
+        0 optional int resultCode;  //结果码
+    };
+
+    //取游戏状态请求
+    struct GameStateReq
+    {
+        0 require long uid;
+    };
+
+    //游戏状态
+    struct GameState
+    {
+        0 require long uid;
+        1 optional E_Game_State state;   //游戏状态
+        2 optional string gameAddr;      //游戏服务器地址
+        3 optional string sRoomID;       //RoomID
+        4 optional int    tableID;       //桌子ID
+        5 optional long   gold;          //金币
+        6 optional string matchID;       //比赛标识
+        7 optional int    enterRoomTime; //进房时间
+    };
+
+    //取游戏状态应答
+    struct GameStateResp
+    {
+        0 optional int resultCode; //结果码
+        1 optional GameState data; //游戏状态
+    };
+
+    //批量取游戏状态请求
+    struct BatchGameStateReq
+    {
+        0 optional vector<long> uidList;    //用户ID列表
+    };
+
+    //批量取游戏状态应答
+    struct BatchGameStateResp
+    {
+        0 optional int resultCode;              //结果码
+        1 optional map<long, GameState> data;   //用户游戏状态数据，uid:
+    };
+
+    //获取在线玩家列表应答
+    struct OnlinePlayerListResp
+    {
+        0 optional int resultCode;        //结果码
+        1 optional vector<long> uidList;  //在线玩家ID列表
+    };
+};
