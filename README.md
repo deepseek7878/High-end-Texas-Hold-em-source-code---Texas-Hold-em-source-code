@@ -7,7 +7,7 @@ A high-performance poker engine designed for real-time gameplay and simulation.
 [![GitHub license](https://img.shields.io/github/license/deepseek7878/texas-holdem-engine?style=for-the-badge)](https://github.com/deepseek7878/texas-holdem-engine/blob/main/LICENSE)
 [![Release](https://img.shields.io/github/v/release/deepseek7878/texas-holdem-engine?style=for-the-badge)](https://github.com/deepseek7878/texas-holdem-engine/releases)
 
-**Professional Texas Hold'em poker engine / 德州源码 / 专业德州扑克游戏引擎 / 專業德州撲克遊戲引擎**  
+**Professional Texas Hold'em poker engine / 德州源码 / 德州俱乐部源码/德州二开/wpk/专业德州扑克游戏引擎 / 專業德州撲克遊戲引擎**  
 
 **真实运营数年 · 支持线下验证 ·ALLIN德州扑克源码 ·八个德州玩法，远超市场主流德州玩法**
 
