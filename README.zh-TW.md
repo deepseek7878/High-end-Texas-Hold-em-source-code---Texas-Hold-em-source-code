@@ -96,6 +96,17 @@ Sitemap：
 https://deepseek7878.github.io/texas-holdem-engine/sitemap.xml
 ```
 
-## Contact
+## 📱 💰联系 | Contact
 
-请在 GitHub 仓库页面补充 Telegram、Email、官网或演示地址，便于搜索用户聯絡。
+
+📱 Telegram：@fox_lovemyself
+
+
+📧 Email：lihongbo9414@gmail.com
+
+## 📱 实时演示 / Live Demo / 即時示範
+
+![FCECCB0C93E7DDC2C04274DEE551FB24](https://github.com/user-attachments/assets/9885072d-c75d-4fd8-84e4-e8a65250e10d)
+![牌桌1-9人](https://github.com/user-attachments/assets/adad8858-9ed3-4554-a00a-89f900636408)
+---
+
