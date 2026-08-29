@@ -6,26 +6,304 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Texas Hold'em Poker Engine Source Code</title>
   <meta name="description" content="High-performance Texas Hold'em poker engine source code for multiplayer poker games, club rooms, tournament events, hand evaluation, betting flow, equity simulation and AI training.">
-  <meta name="keywords" content="Texas Hold'em poker engine, poker source code, poker game source code, multiplayer poker, poker club, poker tournament, hand evaluator, equity calculator">
+  <meta name="keywords" content="Texas Hold'em poker engine, poker source code, poker game source code, multiplayer poker, poker club, poker tournament, hand evaluator, equity calculator, 德州扑克源码, 德州源码, 德州扑克游戏引擎, 德州俱乐部源码">
   <link rel="canonical" href="https://deepseek7878.github.io/texas-holdem-engine/">
+  <meta property="og:title" content="Texas Hold'em Poker Engine Source Code">
+  <meta property="og:description" content="德州扑克游戏引擎源码，支持多人牌桌、牌型判断、下注流程、All-in、边池、锦标赛、俱乐部和 AI 训练扩展。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://deepseek7878.github.io/texas-holdem-engine/">
   <style>
-    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f7f8fb;color:#162033}
-    header{padding:64px 24px;background:linear-gradient(135deg,#101827,#14532d);color:#fff}
-    nav a{color:#bbf7d0;margin-right:18px;text-decoration:none}
-    main{max-width:1120px;margin:0 auto;padding:36px 22px 70px}
-    h1{font-size:44px;margin:18px 0 12px} h2{color:#14532d}
-    .card{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:26px;margin:20px 0;box-shadow:0 14px 35px rgba(15,23,42,.08)}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
-    li{margin:8px 0;line-height:1.65} footer{padding:30px;text-align:center;color:#64748b}
+    :root {
+      --bg: #f7f8fb;
+      --card: #ffffff;
+      --text: #162033;
+      --muted: #64748b;
+      --green: #14532d;
+      --green2: #16a34a;
+      --line: #e5e7eb;
+      --shadow: 0 14px 35px rgba(15, 23, 42, .08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      padding: 64px 24px;
+      background: linear-gradient(135deg, #101827, #14532d);
+      color: #fff;
+    }
+
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    nav {
+      margin-bottom: 32px;
+    }
+
+    nav a {
+      color: #bbf7d0;
+      margin-right: 18px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 44px;
+      line-height: 1.12;
+      margin: 18px 0 14px;
+    }
+
+    header p {
+      max-width: 880px;
+      color: #dcfce7;
+      font-size: 18px;
+      line-height: 1.75;
+      margin: 0;
+    }
+
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 36px 22px 72px;
+    }
+
+    h2 {
+      color: var(--green);
+      font-size: 30px;
+      margin: 0 0 14px;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      color: #0f172a;
+    }
+
+    p, li {
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 26px;
+      margin: 20px 0;
+      box-shadow: var(--shadow);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(22, 163, 74, .13);
+      color: #dcfce7;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .screenshots {
+      margin-top: 30px;
+    }
+
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
+      margin-top: 22px;
+    }
+
+    .screenshot-grid figure {
+      margin: 0;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, .10);
+    }
+
+    .screenshot-grid img {
+      width: 100%;
+      height: auto;
+      display: block;
+      background: #eef2f7;
+    }
+
+    .screenshot-grid figcaption {
+      padding: 13px 15px;
+      color: #475569;
+      font-size: 14px;
+      border-top: 1px solid #eef2f7;
+    }
+
+    .cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 18px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      background: var(--green2);
+      color: #fff;
+    }
+
+    .btn.secondary {
+      background: #0f172a;
+    }
+
+    footer {
+      padding: 30px;
+      text-align: center;
+      color: var(--muted);
+    }
   </style>
 </head>
 <body>
-<header>
-  <nav><a href="./">Home</a><a href="features.html">Features</a><a href="architecture.html">Architecture</a><a href="deployment.html">Deployment</a><a href="https://github.com/deepseek7878/texas-holdem-engine">GitHub</a></nav>
-  <h1>Texas Hold'em Poker Engine Source Code</h1>
-  <p>High-performance Texas Hold'em poker engine source code for multiplayer poker games, club rooms, tournament events, hand evaluation, betting flow, equity simulation and AI training.</p>
-</header>
-<main><section class="card"><h2>Texas Hold'em Poker Engine / 德州扑克引擎</h2><p>A high-performance source-code foundation for multiplayer poker games, club rooms, tournament events, hand evaluation, betting flow, equity simulation and AI training environments.</p></section><section class="grid"><div class="card"><h2>Game Engine</h2><p>Complete poker table flow, betting rounds, all-in, side pots and showdown settlement.</p></div><div class="card"><h2>Club & Tournament</h2><p>Expandable architecture for private rooms, clubs, unions, SNG and MTT events.</p></div><div class="card"><h2>AI Training</h2><p>Simulation-friendly engine for strategy testing, equity calculation and AI poker training.</p></div></section></main>
-<footer>© 2026 deepseek7878/texas-holdem-engine. Use only within lawful regions and lawful business scopes.</footer>
+  <header>
+    <div class="wrap">
+      <nav>
+        <a href="./">Home</a>
+        <a href="features.html">Features</a>
+        <a href="architecture.html">Architecture</a>
+        <a href="deployment.html">Deployment</a>
+        <a href="https://github.com/deepseek7878/texas-holdem-engine">GitHub</a>
+      </nav>
+
+      <h1>Texas Hold'em Poker Engine Source Code</h1>
+      <p>
+        High-performance Texas Hold'em poker engine source code for multiplayer poker games,
+        club rooms, tournament events, hand evaluation, betting flow, side pots,
+        equity simulation and AI training.
+      </p>
+
+      <div class="badge-row">
+        <span class="badge">Texas Hold'em</span>
+        <span class="badge">Poker Engine</span>
+        <span class="badge">德州扑克源码</span>
+        <span class="badge">Poker Club</span>
+        <span class="badge">Tournament</span>
+        <span class="badge">C++ Game Server</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Texas Hold'em Poker Engine / 德州扑克游戏引擎</h2>
+      <p>
+        This project provides a reusable poker engine foundation for Texas Hold'em apps,
+        multiplayer poker platforms, private poker rooms, poker club systems, tournament events,
+        hand evaluator modules, equity calculators and AI poker training environments.
+      </p>
+      <p>
+        本项目适合德州扑克源码、德州游戏源码、德州俱乐部源码、德州赛事系统、多人扑克游戏服务端、
+        牌型判断、下注流程、All-in 边池结算、胜率计算和 AI 训练场景。
+      </p>
+      <div class="cta">
+        <a class="btn" href="https://github.com/deepseek7878/texas-holdem-engine">View Source on GitHub</a>
+        <a class="btn secondary" href="features.html">View Features</a>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h3>Complete Game Flow</h3>
+        <p>Pre-flop, flop, turn, river, showdown, betting actions, all-in logic and pot settlement.</p>
+      </div>
+      <div class="card">
+        <h3>Club & Tournament</h3>
+        <p>Expandable architecture for poker clubs, private rooms, lobby tables, SNG and MTT events.</p>
+      </div>
+      <div class="card">
+        <h3>AI Training Ready</h3>
+        <p>Simulation-friendly poker logic for equity calculation, bot testing and AI strategy training.</p>
+      </div>
+    </section>
+
+    <section class="card screenshots" id="screenshots">
+      <h2>Product Screenshots / 产品截图</h2>
+      <p>
+        The screenshots below are loaded from <code>docs/assets/Screenshots/</code>.
+        Because GitHub Pages is published from the <code>docs</code> folder, the correct image path in this file is
+        <code>assets/Screenshots/图片文件名</code>.
+      </p>
+
+      <div class="screenshot-grid">
+        <figure>
+          <img src="assets/Screenshots/001.png" alt="Texas Hold'em poker engine product screenshot 001" loading="lazy" onerror="this.closest('figure').style.display='none'">
+          <figcaption>Texas Hold'em Engine Screenshot 001</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/Screenshots/002.png" alt="Texas Hold'em poker engine product screenshot 002" loading="lazy" onerror="this.closest('figure').style.display='none'">
+          <figcaption>Texas Hold'em Engine Screenshot 002</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/Screenshots/003.jpg" alt="Texas Hold'em poker engine product screenshot 003" loading="lazy" onerror="this.closest('figure').style.display='none'">
+          <figcaption>Texas Hold'em Engine Screenshot 003</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/Screenshots/004.jpg" alt="Texas Hold'em poker engine product screenshot 004" loading="lazy" onerror="this.closest('figure').style.display='none'">
+          <figcaption>Texas Hold'em Engine Screenshot 004</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/Screenshots/005.png" alt="Texas Hold'em poker engine product screenshot 005" loading="lazy" onerror="this.closest('figure').style.display='none'">
+          <figcaption>Texas Hold'em Engine Screenshot 005</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/Screenshots/006.png" alt="Texas Hold'em poker engine product screenshot 006" loading="lazy" onerror="this.closest('figure').style.display='none'">
+          <figcaption>Texas Hold'em Engine Screenshot 006</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/Screenshots/007.png" alt="Texas Hold'em poker engine product screenshot 007" loading="lazy" onerror="this.closest('figure').style.display='none'">
+          <figcaption>Texas Hold'em Engine Screenshot 007</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/Screenshots/008.png" alt="Texas Hold'em poker engine product screenshot 008" loading="lazy" onerror="this.closest('figure').style.display='none'">
+          <figcaption>Texas Hold'em Engine Screenshot 008</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>SEO Keywords / 搜索关键词</h2>
+      <p>
+        Texas Hold'em poker source code, Texas Hold'em poker engine, poker engine source code,
+        multiplayer poker game source code, online poker software, poker club source code,
+        poker tournament platform, hand evaluator, equity calculator, Monte Carlo poker simulation,
+        德州扑克源码、德州源码、德州扑克游戏引擎、德州俱乐部源码、德州扑克赛事系统。
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 deepseek7878/texas-holdem-engine. Use only within lawful regions and lawful business scopes.
+  </footer>
 </body>
 </html>
