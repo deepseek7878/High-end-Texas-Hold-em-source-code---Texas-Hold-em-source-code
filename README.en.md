@@ -73,28 +73,7 @@ tests/                 # Automated tests and hand-evaluation cases
 - Suitable for club rooms, unions, tournament events and AI training
 - Multilingual README, GitHub Pages, sitemap and robots files improve discoverability on GitHub, Google and Bing
 
-## GitHub Pages
 
-After uploading the `docs/` folder, enable Pages:
-
-```text
-Settings → Pages → Deploy from a branch
-Branch: main
-Folder: /docs
-Save
-```
-
-Site URL:
-
-```text
-https://deepseek7878.github.io/texas-holdem-engine/
-```
-
-Sitemap:
-
-```text
-https://deepseek7878.github.io/texas-holdem-engine/sitemap.xml
-```
 ## 📱 💰联系 | Contact
 
 
