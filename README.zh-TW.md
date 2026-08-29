@@ -73,28 +73,7 @@ tests/                 # 自动化测试和牌型验证
 - 適合擴充为俱樂部、联盟、锦标赛和 AI 训练平台
 - README、Pages、sitemap、robots 多维度提升 GitHub/Google/Bing 可发现性
 
-## GitHub Pages 發布
 
-上傳 `docs/` 后，推荐这样启用 Pages：
-
-```text
-Settings → Pages → Deploy from a branch
-Branch: main
-Folder: /docs
-Save
-```
-
-發布后访问：
-
-```text
-https://deepseek7878.github.io/texas-holdem-engine/
-```
-
-Sitemap：
-
-```text
-https://deepseek7878.github.io/texas-holdem-engine/sitemap.xml
-```
 
 ## 📱 💰联系 | Contact
 
