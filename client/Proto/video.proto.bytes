@@ -1,0 +1,127 @@
+syntax = "proto3";
+
+option cc_generic_services=false;
+
+////
+package signalApi;
+
+enum CommunCmdType {
+	CMD_CREATE_ROOM_REQ		=	0x0000000;  
+	CMD_CREATE_ROOM_RSP		=	0x0000001;
+	CMD_JOIN_ROOM_REQ		=	0x0000002;
+	CMD_JOIN_ROOM_RSP		=	0x0000003;
+	CMD_LEAVE_ROOM_REQ		=	0x0000004;
+	CMD_LEAVE_ROOM_RSP		=	0x0000005;
+	CMD_GET_ROOM_USERS_REQ	=	0x0000006;
+	CMD_GET_ROOM_USERS_RSP	=	0x0000007;
+	CMD_GET_ROOMS_REQ		=	0x0000008;
+	CMD_GET_ROOMS_RSP		=	0x0000009;
+	CMD_IS_ENTER_ROOM_REQ	=   0x000000a;
+	CMD_IS_ENTER_ROOM_RSP	=   0x000000b;
+	CMD_GER_USER_MID_REQ	=   0x000000c;
+	CMD_GER_USER_MID_RSP	=   0x000000d;
+	CMD_BEAT_HEART			=   0x000000e;
+}
+	
+enum ResponseCode {
+	CODE_SUCCESS	=	0x00;
+	CODE_FAIL		=	0xff;
+}
+	
+message MessageHead{
+	 CommunCmdType type = 1;
+	 int32 len = 2;
+}
+
+message CreateRoomReq{
+	 string roomID = 1;
+}
+
+message CreateRoomRsp{
+	 int32 code = 1;
+	 string roomID = 2;
+}
+
+message JoinRoomReq{
+	 string roomID = 1;
+	 string userID = 2;
+}
+
+message JoinRoomRsp{
+	 int32 code = 1;
+	 string roomID = 2;
+	 string userID = 3;
+}
+
+message LeaveRoomReq{
+	 string roomID = 1;
+	 string userID = 2;
+}
+
+message LeaveRoomRsp{
+	 int32 code = 1;
+	 string roomID = 2;
+	 string userID = 3;
+}
+
+
+message GetRoomUsersReq{
+	 string roomID = 1;
+}
+
+message GetRoomUsersRsp{
+	 int32 code = 1;
+	 string roomID = 2;
+	 int32 count = 3;
+	 repeated string user_info = 4;
+}
+
+
+message GetRoomsReq{
+	
+}
+
+
+message GetRoomsRsp{
+	 int32 code = 1;
+	 int32 page = 2;
+	 int32 total = 3;
+	 repeated string room_info = 4;
+}
+
+
+
+message IsEnterRoomReq{
+	 string userID = 1;
+}
+
+
+message IsEnterRoomRsp{
+	 int32 code = 1;
+	 string userID = 2;
+	 int32 enter_flag = 3;
+}
+
+
+
+message GetUserMidReq{
+	 string userID = 1;
+}
+
+
+message GetUserMidRsp{
+	 int32 code = 1;
+	 string userID = 2;
+	 string mid = 3;
+}
+
+
+message BeatHeart{
+	string ip = 1;
+	int32 port = 2;
+	string name = 3;
+}
+
+	
+
+

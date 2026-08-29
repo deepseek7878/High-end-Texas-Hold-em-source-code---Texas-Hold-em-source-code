@@ -1,0 +1,91 @@
+syntax = "proto3";
+
+option cc_generic_services = false;
+
+package ActivityProto;
+
+message RewardProps
+{
+    sint32 propsID = 1;
+    uint64 number = 2;
+}
+
+//查询宝箱
+message QueryBoxReq
+{
+    sint64 uid = 1;
+    sint32 betId = 2;//场次id
+}
+
+message QueryBoxResp
+{
+    message BoxInfo
+    {
+        sint32 number = 1;//宝箱数量
+        sint32 todayNumber = 2;//当天的数量
+        sint32 progressRate = 3;//获得新宝箱的进度
+    }
+    map<sint32, BoxInfo> mapBox = 1; //key:betId, value:数量
+    sint32 totalNumber = 2;//宝箱总数量
+    sint32 totalTodayNumber = 3;//宝箱当天获得总数量
+    sint32 resultCode = 4;//结果码
+}
+
+//领取宝箱奖励
+message BoxRewardReq
+{
+    sint64 uid = 1;
+    sint32 betId = 2;//场次id
+}
+
+message BoxRewardResp  
+{
+    repeated RewardProps rewards = 1; //奖励
+    sint32 resultCode = 2;//结果码
+}
+
+enum LotteryType
+{
+    BEGING = 0;
+    FREE = 10000;//免费抽奖
+    TREASURE = 10001;//夺宝抽奖
+}
+
+//转盘查询
+message QueryLuckyWheelReq
+{
+}
+
+message QueryLuckyWheelResp
+{
+    sint64 cdTime = 1; //冷却时间剩余秒数
+    bool firstRecharge = 2;//是否首次购买
+    sint32 lootCount = 3;//剩余付费次数
+    sint32 resultCode = 4;//结果码
+}
+
+//转盘抽奖
+message LuckyWheelLotteryReq
+{
+    sint32 lotteryType = 1; //抽卡类型
+}
+
+message LuckyWheelLotteryResp
+{
+    sint32 rewardId = 1;//抽奖ID
+    sint32 resultCode = 2;//结果码
+}
+
+//转盘领奖
+message LuckyWheelRewardReq
+{
+    sint32 lotteryType = 1; //抽卡类型
+    bool redouble = 2;//是否翻倍
+    sint32 rewardId = 3;//抽奖ID
+}
+
+message LuckyWheelRewardResp
+{
+    repeated RewardProps rewards = 1;//奖励
+    sint32 resultCode = 2;//结果码
+}

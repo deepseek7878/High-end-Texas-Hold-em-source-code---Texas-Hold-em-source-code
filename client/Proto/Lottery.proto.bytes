@@ -1,0 +1,47 @@
+
+syntax = "proto3";
+
+option cc_generic_services=false;
+
+package LotteryProto;
+
+enum E_LOTTERY_TYPE
+{
+    E_LOTTERY_NONE          = 0;    //
+    E_LOTTERY_FREE          = 1;    // 免费旋转
+    E_LOTTERY_SUPER         = 99;    // 超级旋转
+    E_LOTTERY_LOOP          = 2;    // 循环旋转
+    E_LOTTERY_FIRST_TIME    = 3;    // 首次旋转
+}
+
+message LotteryReq
+{
+    E_LOTTERY_TYPE  rotateType  = 1;//旋转类型
+}
+
+message LotteryResp
+{
+    sint32 resultCode   = 1;//结果码
+    sint32 rewardId     = 2;//奖品ID
+}
+
+// 查询转盘信息发空包
+
+message RewardItem
+{
+    sint32 goodsID  = 1;    //物品ID
+    sint32 count    = 2;    //物品数量
+    sint32 rewardId = 3;    //奖品ID
+}
+
+message QueryLotteryDetailResp
+{
+    sint32   resultCode             = 1;    // 错误码
+    sint32 freeRotateTimes          = 2;    //免费旋转次数
+    sint32 cooldown                 = 3;    //冷却时间 -- CD
+    sint32 superNeedFreeTimes       = 4 ;   // 超级选择需要的免费旋转次数
+    E_LOTTERY_TYPE  rotateType      = 5;    //旋转类型
+    repeated RewardItem rewardPool  = 6;    //奖池
+    string icon                     = 7;    //图标
+    string cartoon                  =8 ;    //动画
+}

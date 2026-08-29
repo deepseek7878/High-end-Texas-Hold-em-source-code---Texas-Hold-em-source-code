@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+option cc_generic_services=false;
+
+package SignInProto;
+
+message totalItem
+{
+    bool canReceive = 1;
+    bool hasReceive = 2;
+}
+
+// 客户端发空包查询
+message QuerySignInDetailRsp
+{
+    sint32 resultCode               = 1;
+    repeated bool signInTable       = 2;
+    repeated totalItem totalTable   = 3;
+    bool    hasSignIn               = 4;
+    sint32  total                   = 5;//累计签到次数
+}
+
+// 签到发空包
+message SignInRsp
+{
+    sint32 resultCode = 1;
+    sint32 dayIndex   = 2;  //签到索引,从0开始
+    sint32 awardIndex = 3;//奖励索引,从0开始,如果没有累计奖励值为-1
+}
+
+message ReceiveAwardReq
+{
+    sint32 awardIndex = 1; //奖励索引,从0开始
+}
+
+// 领取累计奖励发空包
+message ReceiveAwardRsp
+{
+    sint32 resultCode = 1;
+    sint32 awardIndex = 2;//奖励索引,从0开始
+}
+
+//新手签到奖励
+message SignInRewards
+{
+    sint32 dayIndex = 1;//第几天,从1开始
+    sint32 rewardID = 2;//奖励ID
+}
+
+//查询新手签到已领取奖励应答
+message SignInRewardsQueryResp
+{
+    sint32 resultCode   = 1;
+    sint32 noviceDays   = 2;//新手期,单位天
+    sint32 regTime      = 3;//注册时间戳
+    sint32 curDayIndex  = 4;//当前第几天,从1开始
+    string rewardsBit   = 5;//领取奖励状态标记位,0表示未领取,1表示已领取
+}
+
+//领取新手签到奖励请求
+message SignInRewardsGetReq
+{
+    SignInRewards reward = 1;
+}
+
+//领取新手签到奖励应答
+message SignInRewardsGetResp
+{
+    sint32 resultCode    = 1;
+    SignInRewards reward = 2;
+}

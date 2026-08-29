@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option cc_generic_services=false;
+
+package XGameHttp;
+
+//用户标识
+message TUid
+{
+    sint64 lUid = 1;    //用户id
+    string sToken = 2;  //用户token
+}
+
+//请求返回HTTP协议包体数据
+message THttpPackage
+{
+    sint32 iVer = 1;    // 版本号
+    sint32 iSeq = 2;    // 序列号
+    TUid stUid = 3;     // 用户标识
+    sint32 nMsgID = 4;	// 消息ID
+    bytes vecData = 5;	// 命令对应的协议数据
+}	
+
+
+

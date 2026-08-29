@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option cc_generic_services=false;
+
+//import "XGameComm.proto";
+
+package XGameComm;
+
+message MessageRequest
+{
+    sint64 lUin = 1;        //用户id
+    string sMsgPack = 2;    //数据包
+    string sPushAddr = 3;   //推送地址
+}
+
+message MessageResponse
+{
+    sint64 lUin = 1;        //用户id
+    string sMsgPack = 2;    //应答数据
+}
+
+service Comm {
+	rpc onRequest(MessageRequest) returns (MessageResponse) {
+    }
+}

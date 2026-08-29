@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option cc_generic_services=false;
+
+package XGameSoProto;
+
+/* So通用消息, 每个游戏消息必须使用TSoMsg作为协议包头 */
+message TSoMsg
+{
+    sint32 nVer = 1;	  //版本
+    sint32 nCmd = 2;	  // 命令字
+    bytes vecMsgData = 3; //消息数据		
+}
+
+message TSoDebugCard
+{
+	message Cards{
+		repeated string vCards = 1;
+	}
+	map<string, Cards> mDebugHdCard = 1; //key : cid (start 0)
+	Cards mDebugCommCard = 2;
+}

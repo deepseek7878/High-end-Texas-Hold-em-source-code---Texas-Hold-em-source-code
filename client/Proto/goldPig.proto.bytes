@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option cc_generic_services=false;
+
+package GoldPigProto;
+
+message GoldPigDetail
+{
+    bool    alreadyOpen     = 2;//已开启
+    bool    alreadyPay      = 3;//已付费
+    sint32  level           = 4;//等级
+    sint32  gold            = 5;//当前储蓄量
+    sint32  storage         = 6;//容量上限
+    double  purchaseAmount  = 7;//升级价格
+    string  product_id      = 8;// 商品的购买ID
+}
+
+message QueryGoldPigDetailResp
+{
+    sint32  resultCode      = 1;
+    GoldPigDetail data      = 2;
+}
+
+//请求空包 --->服务器主动PUSH结果
+message PurchaseGoldPigResp
+{
+    sint32  resultCode  = 1;
+}
+
+
+//敲击储蓄罐
+message KnockGoldPigResp
+{
+    sint32  resultCode      = 1;
+    GoldPigDetail data      = 2;
+}

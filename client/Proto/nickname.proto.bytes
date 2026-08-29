@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option cc_generic_services=false;
+
+package NicknameProto;
+
+// 获取随机昵称请求
+message ListNickNameRandomReq
+{
+	sint32 count = 1;   //数量
+}
+
+// 获取随机昵称应答
+message ListNickNameRandomResp
+{
+	sint32 resultCode = 1;  //结果码
+	repeated string nickname = 2;  //随机昵称
+}

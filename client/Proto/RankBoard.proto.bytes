@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+option cc_generic_services=false;
+
+package RankBoardProto;
+
+enum E_RANK_SEASON_TYPE
+{
+    E_SEASON_NONE    = 0; //默认值--无效
+    E_SEASON_NOW     = 1; //当前赛季
+    E_SEASON_LAST    = 2; //上次赛季
+}
+
+message QueryRankInfoReq
+{    
+    sint32 type        = 1;//0-筹码,1-等级,2-世界段位,3-区域段位,4-AI场分数
+    sint32 areaId      = 2;//玩家所属区域ID
+    E_RANK_SEASON_TYPE seasonType = 3;//赛季类型,参考E_RANK_SEASON_TYPE
+}
+
+message RankItem
+{
+    sint64 uid      = 1; //标识
+    sint64 gold     = 2; //金币
+    sint64 level    = 3; //等级
+    sint32 starNum  = 4; //星数
+    sint32 danGrade = 5; //段位
+}
+
+message QueryRankInfoResp
+{    
+    sint32 resultCode = 1;
+    sint32 rankingType = 2;
+    E_RANK_SEASON_TYPE seasonType = 3;//赛季类型,参考E_RANK_SEASON_TYPE
+    repeated RankItem list = 4;
+}
+
+message FriendAIRankItem
+{
+    sint64 uid      = 1; //标识
+    sint64 gold     = 2; //分数
+    sint32 level    = 3; //等级
+    sint32 starNum  = 4; //手数
+}
+
+message QueryFriendAIRankInfoResp
+{    
+    sint32 resultCode = 1;
+    repeated FriendAIRankItem list = 2;
+}
+
+message QueryAIBaseInfoResp
+{
+    sint64 uid = 1;             //玩家id
+    sint32 hdcount = 2;         //玩家手数
+    sint32 gold = 3;            //玩家盈利
+    sint32 aigold = 4;          //AI盈利
+    sint32 userwincount = 5;    //玩家胜利数
+    sint32 usercount = 6;       //玩家总数
+}

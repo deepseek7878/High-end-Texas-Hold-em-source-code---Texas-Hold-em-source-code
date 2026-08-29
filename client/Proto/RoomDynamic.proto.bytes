@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option cc_generic_services=false;
+
+package RoomDynamicProto;
+
+//取桌子列表请求
+message GetTableListReq
+{
+    string roomId = 1;   //房间ID
+    sint32 offset = 2;	 //开始位置
+    sint32 count = 3;	 //条数
+}
+
+//桌子信息
+message TableItem
+{
+    sint32 sitid = 1;
+    sint64 uid = 2;
+}
+
+//取桌子列表应答
+message GetTableListResp
+{
+    sint32 resultCode = 1;  //结果码
+    repeated TableItem data = 2;
+}
