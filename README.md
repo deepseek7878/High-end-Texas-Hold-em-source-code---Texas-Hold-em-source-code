@@ -1,5 +1,6 @@
 A high-performance poker engine designed for real-time gameplay and simulation.
-# Texas Hold'em Poker Engine/ 德州源码 / 德州私人局/德州扑克源码/德州俱乐部源码/德州二开/wpk/专业德州扑克游戏引擎 / 專業德州撲克遊戲引擎
+# Texas Hold'em Poker Engine—德州源码|德州私人局|德州俱乐部源码|wpk|专业德州扑克游戏引擎
+[English](README.en.md) | [繁體中文](README.zh-TW.md) | [GitHub Pages](https://deepseek7878.github.io/texas-holdem-engine/)
 
 [![GitHub stars](https://img.shields.io/github/stars/deepseek7878/texas-holdem-engine?style=for-the-badge)](https://github.com/deepseek7878/texas-holdem-engine)
 [![GitHub forks](https://img.shields.io/github/forks/deepseek7878/texas-holdem-engine?style=for-the-badge)](https://github.com/deepseek7878/texas-holdem-engine)
@@ -47,7 +48,7 @@ python demo.py
 
 **访问 `http://localhost:3000` 体验完整牌局！ / Experience full gameplay! / 體驗完整牌局！联系Telegram：@fox_lovemyself**
 
-## 📱 💰 获取源码 | Contact
+## 📱 💰联系 | Contact
 
 
 📱 Telegram：@fox_lovemyself
