@@ -1,0 +1,10 @@
+name: Basic CI
+
+on: [push, pull_request]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: test -f README.md && test -f docs/index.html && test -f docs/sitemap.xml
